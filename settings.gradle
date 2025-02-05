@@ -1,1 +1,2 @@
-rootProject.name = 'betvictortask'
+rootProject.name = 'betvictor-task'
+include 'processing-app', 'repository-app'
