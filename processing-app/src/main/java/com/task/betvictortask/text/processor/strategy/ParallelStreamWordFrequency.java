@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.concurrent.ConcurrentMap;
 import java.util.function.Function;
-import java.util.regex.Matcher;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,10 +25,7 @@ public class ParallelStreamWordFrequency implements WordFrequencyStrategy {
         log.debug("Total length of paragraphs: '{}'", overallLength);
 
         ConcurrentMap<String, Long> frequencyMap = paragraphs.parallelStream()
-                .flatMap(paragraph -> {
-                    Matcher matcher = WORD_PATTERN.matcher(paragraph);
-                    return matcher.results().map(matchResult -> matchResult.group().toLowerCase());
-                })
+                .flatMap(this::findMatches)
                 .collect(Collectors.groupingByConcurrent(Function.identity(), Collectors.counting()));
 
         log.info("Word parallel frequency processing completed successfully");

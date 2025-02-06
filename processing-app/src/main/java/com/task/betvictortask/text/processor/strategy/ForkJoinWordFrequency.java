@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.ForkJoinPool;
 import java.util.function.Function;
-import java.util.regex.Matcher;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,10 +29,7 @@ public class ForkJoinWordFrequency implements WordFrequencyStrategy {
         try {
             frequencyMap = customPool.submit(() ->
                     paragraphs.parallelStream()
-                            .flatMap(paragraph -> {
-                                Matcher matcher = WORD_PATTERN.matcher(paragraph);
-                                return matcher.results().map(matchResult -> matchResult.group().toLowerCase());
-                            })
+                            .flatMap(this::findMatches)
                             .collect(Collectors.groupingByConcurrent(Function.identity(), Collectors.counting()))
             ).get();
             log.info("Word frequency processing completed successfully");
