@@ -1,5 +1,7 @@
-package com.task.betvictortask.text.processor;
+package com.task.betvictortask.unit.processor.text;
 
+import com.task.betvictortask.text.processor.WordFrequencyResult;
+import com.task.betvictortask.text.processor.WordFrequencyStrategy;
 import com.task.betvictortask.text.processor.strategy.ForkJoinWordFrequency;
 import com.task.betvictortask.text.processor.strategy.ParallelStreamWordFrequency;
 import com.task.betvictortask.text.processor.strategy.SingleThreadedWordFrequency;

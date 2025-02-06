@@ -1,4 +1,4 @@
-package com.task.betvictortask.text.processor;
+package com.task.betvictortask.unit.processor.text;
 
 import lombok.Getter;
 import lombok.Setter;
