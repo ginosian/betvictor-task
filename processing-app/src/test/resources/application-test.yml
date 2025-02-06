@@ -1,0 +1,23 @@
+spring:
+  kafka:
+    bootstrap-servers: "${KAFKA_BOOTSTRAP_SERVER:pkc-619z3.us-east1.gcp.confluent.cloud:9092}"
+    security:
+      protocol: SASL_SSL
+    properties:
+      sasl.mechanism: PLAIN
+      sasl.jaas.config: org.apache.kafka.common.security.plain.PlainLoginModule required username="${KAFKA_USERNAME:RR6T44B56DLLSRPL}" password="${KAFKA_PASSWORD:WUGaXHz9dLAVMF2Km4yc1Xtph8ZnehDaw5Qbp9nPwt03QqNWvKcnVLHazeU9npaV}";
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    consumer:
+      group-id: "text-processor-group"
+      auto-offset-reset: earliest
+      enable-auto-commit: false
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: "*"
+        max.poll.records: 10
+        concurrency: "${KAFKA_CONSUMER_AMOUNT:6}"
+    listener:
+      ack-mode: manual
